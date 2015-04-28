@@ -10,9 +10,9 @@ let style = {
 
 export class Board extends React.Component {
   render () {
-    let rows = Array.apply(null, new Array(this.props.rows)).map((item, index) => {
+    let rows = this.props.board.map((row, index) => {
       return (
-        <Row cells={this.props.cells} key={index} />
+        <Row cells={row} key={index} />
       );
     });
 
@@ -26,6 +26,5 @@ export class Board extends React.Component {
 }
 
 Board.propTypes = {
-  rows: React.PropTypes.number.isRequired,
-  cells: React.PropTypes.number.isRequired
+  board: React.PropTypes.array.isRequired
 };

@@ -8,9 +8,9 @@ let style = {
 
 export class Row extends React.Component {
   render () {
-    let squares = Array.apply(null, new Array(this.props.cells)).map((item, index) => {
+    let squares = this.props.cells.map((cell, index) => {
       return (
-        <Square key={index} />
+        <Square isMine={cell} key={index} />
       );
     });
 
@@ -23,5 +23,5 @@ export class Row extends React.Component {
 }
 
 Row.propTypes = {
-  cells: React.PropTypes.number.isRequired
+  cells: React.PropTypes.array.isRequired
 };

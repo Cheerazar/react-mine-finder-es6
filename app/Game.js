@@ -9,20 +9,37 @@ let style = {
   height: 270
 };
 
+function makeBoard(rows = 8, cells = 8, mines = 10) {
+  let board = [];
+  let rowModel = [];
+
+  // create the array that will be the model for each row
+  for (let i = 0; i < cells; i++) {
+    rowModel[i] = false;
+  }
+
+  // Use the rowModel to fill the board
+  for (let j = 0; j < rows; j++) {
+    board[j] = rowModel.slice(0);
+  }
+
+  // TODO: insert mines randomly into board (use fisher-yates?)
+  return board;
+}
+
 class Game extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
-      rows: 8,
-      cells: 8,
-      mines: 10
+      board: makeBoard(),
+      isStarted: false
     };
   }
 
   render () {
     return (
       <div style={style}>
-        <Board rows={this.state.rows} cells={this.state.cells} />
+        <Board board={this.state.board} />
       </div>
     );
   }
