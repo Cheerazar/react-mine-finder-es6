@@ -12,7 +12,10 @@ export class Board extends React.Component {
   render () {
     let rows = this.props.board.map((row, index) => {
       return (
-        <Row cells={row} key={index} />
+        <Row
+          cells={row}
+          key={index}
+          updateSquare={this.props.updateSquare} />
       );
     });
 
@@ -26,5 +29,6 @@ export class Board extends React.Component {
 }
 
 Board.propTypes = {
-  board: React.PropTypes.array.isRequired
+  board: React.PropTypes.array.isRequired,
+  updateSquare: React.PropTypes.func.isRequired
 };

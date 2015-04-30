@@ -10,7 +10,11 @@ export class Row extends React.Component {
   render () {
     let squares = this.props.cells.map((cell, index) => {
       return (
-        <Square isMine={cell} key={index} />
+        <Square
+          cell={cell}
+          key={index}
+          index={index}
+          updateSquare={this.props.updateSquare} />
       );
     });
 
@@ -23,5 +27,6 @@ export class Row extends React.Component {
 }
 
 Row.propTypes = {
-  cells: React.PropTypes.array.isRequired
+  cells: React.PropTypes.array.isRequired,
+  updateSquare: React.PropTypes.func.isRequired
 };

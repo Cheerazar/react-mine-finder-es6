@@ -12,11 +12,16 @@ let styles = {
 export class Square extends React.Component {
   render () {
     return (
-      <button type="button" style={styles} disabled>{ this.props.isMine ? 1 : 0 }</button>
+      <button
+        onContextMenu={this.handleClick.bind(this)}
+        type="button" style={styles}>
+        { this.props.cell.isMine ? 1 : 0 }
+      </button>
     );
   }
 }
 
 Square.propTypes = {
-  isMine: React.PropTypes.bool.isRequired
+  cell: React.PropTypes.object.isRequired,
+  updateSquare: React.PropTypes.func.isRequired
 };
