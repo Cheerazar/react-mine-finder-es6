@@ -15,7 +15,8 @@ export class Board extends React.Component {
         <Row
           cells={row}
           key={index}
-          updateSquare={this.props.updateSquare} />
+          markSquare={this.props.markSquare}
+          revealSquare={this.props.revealSquare} />
       );
     });
 
@@ -30,5 +31,6 @@ export class Board extends React.Component {
 
 Board.propTypes = {
   board: React.PropTypes.array.isRequired,
-  updateSquare: React.PropTypes.func.isRequired
+  markSquare: React.PropTypes.func.isRequired,
+  revealSquare: React.PropTypes.func.isRequired
 };

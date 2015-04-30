@@ -85,12 +85,23 @@ class Game extends React.Component {
     };
   }
 
+  // deal with right clicking on a square to mark with ?, flag, and back to normal
+  markSquare (cellInfo) {
+
+  }
+
+  // deal with left clicking on a square to reveal it
+  revealSquare (cellInfo) {
+
+  }
+
   render () {
     return (
       <div style={style}>
         <Board
           board={this.state.board}
-          updateSquare={this.updateSquare.bind(this)} />
+          markSquare={this.markSquare.bind(this)}
+          revealSquare={this.revealSquare.bind(this)} />
       </div>
     );
   }

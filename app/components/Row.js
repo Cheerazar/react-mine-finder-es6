@@ -14,7 +14,8 @@ export class Row extends React.Component {
           cell={cell}
           key={index}
           index={index}
-          updateSquare={this.props.updateSquare} />
+          markSquare={this.props.markSquare}
+          revealSquare={this.props.revealSquare} />
       );
     });
 
@@ -28,5 +29,6 @@ export class Row extends React.Component {
 
 Row.propTypes = {
   cells: React.PropTypes.array.isRequired,
-  updateSquare: React.PropTypes.func.isRequired
+  markSquare: React.PropTypes.func.isRequired,
+  revealSquare: React.PropTypes.func.isRequired
 };
