@@ -87,7 +87,24 @@ class Game extends React.Component {
 
   // deal with right clicking on a square to mark with ?, flag, and back to normal
   markSquare (cellInfo) {
+    // as I'm passing a reference around to the object within board, should I make
+    // a copy of both the cell and board here to maintain immutable principles?
+    let cellCopy = deepcopy(cellInfo);
+    let newBoard = deepcopy(this.state.board);
 
+    if (cellCopy.status === 'normal') {
+      cellCopy.status = 'flag';
+    } else if (cellCopy.status === 'flag') {
+      cellCopy.status = 'question-sign';
+    } else {
+      cellCopy.status = 'normal';
+    }
+
+    newBoard[cellCopy.row][cellCopy.cell] = cellCopy;
+
+    this.setState({
+      board: newBoard
+    });
   }
 
   // deal with left clicking on a square to reveal it
