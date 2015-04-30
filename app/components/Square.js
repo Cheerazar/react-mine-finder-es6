@@ -1,4 +1,5 @@
 import React from 'react';
+import { Glyphicon } from 'react-bootstrap';
 
 let styles = {
   display: 'flex',
@@ -21,12 +22,22 @@ export class Square extends React.Component {
   }
 
   render () {
+    let cell = this.props.cell;
+    let glyph;
+
+    if (cell.status !== 'normal' && cell.status !== 'revealed') {
+      glyph = <Glyphicon glyph={cell.status} />;
+    } else {
+      glyph = cell.status === 'revealed' ? 1 : undefined;
+    }
+
     return (
       <button
         onContextMenu={this.handleClick.bind(this)}
         onClick={this.handleClick.bind(this)}
-        type="button" style={styles}>
-        { this.props.cell.status !== 'revealed' ? undefined : 1 }
+        type="button"
+        style={styles}>
+        { glyph }
       </button>
     );
   }
