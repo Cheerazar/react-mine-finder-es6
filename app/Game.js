@@ -52,6 +52,73 @@ function insertMines (board, numOfMines) {
   return minedBoard;
 }
 
+function revealedNums(board) {
+  const vectors = {
+    northwest: {
+      up: 1,
+      right: -1
+    },
+
+    north: {
+      up: 1,
+      right: 0
+    },
+
+    northeast: {
+      up: 1,
+      right: 1
+    },
+
+    east: {
+      up: 0,
+      right: 1,
+    },
+
+    southeast: {
+      up: -1,
+      right: 1
+    },
+
+    south: {
+      up: -1,
+      right: 0
+    },
+
+    southwest: {
+      up: -1,
+      right: -1
+    },
+
+    west: {
+      up: 0,
+      right: -1
+    }
+  };
+
+  return board.map((row) => {
+    return row.map((cell) => {
+      // Should make sure to not set numRevealed to anything if the cell is a mine
+      // probably a potential optimization.
+      if (!cell.isMine) {
+        cell.numRevealed = Object.keys(vectors).reduce((total, curr) => {
+          // need to check to make sure the board[row] is actually on the board, otherwise when you do board[row][cell] where board[row] is undefined you can't access the [cell] index on undefined
+          let neighborRow = board[cell.row + vectors[curr].up];
+          let neighborCell = neighborRow ? neighborRow[cell.cell + vectors[curr].right] : undefined;
+          if (neighborCell && neighborCell.isMine) {
+            total++;
+          }
+
+          return total;
+        }, 0);
+      } else {
+        cell.numRevealed = 0;
+      }
+
+      return cell;
+    });
+  })
+}
+
 function makeBoard(rows = 8, cells = 8, mines = 10) {
   let board = [];
   let rowModel = [];
@@ -73,7 +140,8 @@ function makeBoard(rows = 8, cells = 8, mines = 10) {
     }
   }
 
-  return insertMines(board, mines);
+  board = insertMines(board, mines);
+  return revealedNums(board);
 }
 
 class Game extends React.Component {
