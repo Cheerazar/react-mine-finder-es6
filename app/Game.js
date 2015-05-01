@@ -81,7 +81,8 @@ class Game extends React.Component {
     super(props);
     this.state = {
       board: makeBoard(),
-      isStarted: false
+      isStarted: false,
+      mineCount: 10
     };
   }
 
@@ -91,11 +92,14 @@ class Game extends React.Component {
     // a copy of both the cell and board here to maintain immutable principles?
     let cellCopy = deepcopy(cellInfo);
     let newBoard = deepcopy(this.state.board);
+    let newMineCount = this.state.mineCount;
 
     if (cellCopy.status === 'normal') {
       cellCopy.status = 'flag';
+      newMineCount--;
     } else if (cellCopy.status === 'flag') {
       cellCopy.status = 'question-sign';
+      newMineCount++;
     } else {
       cellCopy.status = 'normal';
     }
@@ -103,7 +107,8 @@ class Game extends React.Component {
     newBoard[cellCopy.row][cellCopy.cell] = cellCopy;
 
     this.setState({
-      board: newBoard
+      board: newBoard,
+      mineCount: newMineCount
     });
   }
 
@@ -118,7 +123,8 @@ class Game extends React.Component {
         <Board
           board={this.state.board}
           markSquare={this.markSquare.bind(this)}
-          revealSquare={this.revealSquare.bind(this)} />
+          revealSquare={this.revealSquare.bind(this)}
+          mineCount={this.state.mineCount} />
       </div>
     );
   }

@@ -10,8 +10,12 @@ export class Mines extends React.Component {
   render () {
     return (
       <div style={style}>
-        Hello from Mines!
+        {this.props.mineCount}
       </div>
     );
   }
 }
+
+Mines.propTypes = {
+  mineCount: React.PropTypes.number.isRequired
+};

@@ -22,7 +22,7 @@ export class Board extends React.Component {
 
     return (
       <div style={style}>
-        <GameState />
+        <GameState mineCount={this.props.mineCount} />
         { rows }
       </div>
     );
@@ -32,5 +32,6 @@ export class Board extends React.Component {
 Board.propTypes = {
   board: React.PropTypes.array.isRequired,
   markSquare: React.PropTypes.func.isRequired,
-  revealSquare: React.PropTypes.func.isRequired
+  revealSquare: React.PropTypes.func.isRequired,
+  mineCount: React.PropTypes.number.isRequired
 };

@@ -12,10 +12,14 @@ export class GameState extends React.Component {
   render () {
     return (
       <div style={style}>
-        <Mines />
+        <Mines mineCount={this.props.mineCount} />
         <Reset />
         <Time />
       </div>
     );
   }
 }
+
+GameState.propTypes = {
+  mineCount: React.PropTypes.number.isRequired
+};
