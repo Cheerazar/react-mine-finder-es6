@@ -16,13 +16,16 @@ export class Board extends React.Component {
           cells={row}
           key={index}
           markSquare={this.props.markSquare}
-          revealSquare={this.props.revealSquare} />
+          revealSquare={this.props.revealSquare}
+          gameLost={this.props.gameLost} />
       );
     });
 
     return (
       <div style={style}>
-        <GameState mineCount={this.props.mineCount} />
+        <GameState
+          mineCount={this.props.mineCount}
+          gameLost={this.props.gameLost} />
         { rows }
       </div>
     );
@@ -33,5 +36,6 @@ Board.propTypes = {
   board: React.PropTypes.array.isRequired,
   markSquare: React.PropTypes.func.isRequired,
   revealSquare: React.PropTypes.func.isRequired,
-  mineCount: React.PropTypes.number.isRequired
+  mineCount: React.PropTypes.number.isRequired,
+  gameLost: React.PropTypes.bool.isRequired
 };

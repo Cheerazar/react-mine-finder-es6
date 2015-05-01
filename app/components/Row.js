@@ -15,7 +15,8 @@ export class Row extends React.Component {
           key={index}
           index={index}
           markSquare={this.props.markSquare}
-          revealSquare={this.props.revealSquare} />
+          revealSquare={this.props.revealSquare}
+          gameLost={this.props.gameLost} />
       );
     });
 
@@ -30,5 +31,6 @@ export class Row extends React.Component {
 Row.propTypes = {
   cells: React.PropTypes.array.isRequired,
   markSquare: React.PropTypes.func.isRequired,
-  revealSquare: React.PropTypes.func.isRequired
+  revealSquare: React.PropTypes.func.isRequired,
+  gameLost: React.PropTypes.bool.isRequired
 };

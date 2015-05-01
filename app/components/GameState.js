@@ -13,7 +13,7 @@ export class GameState extends React.Component {
     return (
       <div style={style}>
         <Mines mineCount={this.props.mineCount} />
-        <Reset />
+        <Reset gameLost={this.props.gameLost} />
         <Time />
       </div>
     );
@@ -21,5 +21,6 @@ export class GameState extends React.Component {
 }
 
 GameState.propTypes = {
-  mineCount: React.PropTypes.number.isRequired
+  mineCount: React.PropTypes.number.isRequired,
+  gameLost: React.PropTypes.bool.isRequired
 };

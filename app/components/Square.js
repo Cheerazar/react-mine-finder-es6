@@ -37,7 +37,7 @@ export class Square extends React.Component {
         onClick={this.handleClick.bind(this)}
         type="button"
         style={styles}
-        disabled={cell.status !== 'normal' ? true : false }>
+        disabled={cell.status !== 'normal' || this.props.gameLost ? true : false }>
         { glyph }
       </button>
     );
@@ -47,5 +47,6 @@ export class Square extends React.Component {
 Square.propTypes = {
   cell: React.PropTypes.object.isRequired,
   markSquare: React.PropTypes.func.isRequired,
-  revealSquare: React.PropTypes.func.isRequired
+  revealSquare: React.PropTypes.func.isRequired,
+  gameLost: React.PropTypes.bool.isRequired
 };

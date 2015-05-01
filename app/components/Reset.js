@@ -10,8 +10,12 @@ export class Reset extends React.Component {
   render () {
     return (
       <div style={style}>
-        Hello from Reset!
+        { this.props.gameLost ? 'Boo lost the game!' : 'Hello from Reset!' }
       </div>
     );
   }
 }
+
+Reset.propTypes = {
+  gameLost: React.PropTypes.bool.isRequired
+};

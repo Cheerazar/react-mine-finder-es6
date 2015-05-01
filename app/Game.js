@@ -150,6 +150,7 @@ class Game extends React.Component {
     this.state = {
       board: makeBoard(),
       isStarted: false,
+      gameLost: false,
       mineCount: 10
     };
   }
@@ -182,7 +183,15 @@ class Game extends React.Component {
 
   // deal with left clicking on a square to reveal it
   revealSquare (cellInfo) {
-
+    let newBoard = deepcopy(this.state.board);
+    // if it's a mine set gameLost to true
+    // else if it's not a mine (checked in previous condition) and numRevealed > 0 reveal just that square
+    // else reveal all squares until hitting numRevealed's all around
+    if (cellInfo.isMine) {
+      this.setState({
+        gameLost: true
+      });
+    }
   }
 
   render () {
@@ -192,7 +201,8 @@ class Game extends React.Component {
           board={this.state.board}
           markSquare={this.markSquare.bind(this)}
           revealSquare={this.revealSquare.bind(this)}
-          mineCount={this.state.mineCount} />
+          mineCount={this.state.mineCount}
+          gameLost={this.state.gameLost} />
       </div>
     );
   }
