@@ -14,7 +14,7 @@ export class Square extends React.Component {
   handleClick (e) {
     e.preventDefault();
     let cell = this.props.cell;
-    if (cell.status !== 'revealed' && e.type === 'click') {
+    if (cell.status === 'normal' && e.type === 'click') {
       this.props.revealSquare(cell);
     } else if (cell.status !== 'revealed' && e.type === 'contextmenu') {
       this.props.markSquare(cell);
@@ -36,7 +36,8 @@ export class Square extends React.Component {
         onContextMenu={this.handleClick.bind(this)}
         onClick={this.handleClick.bind(this)}
         type="button"
-        style={styles}>
+        style={styles}
+        disabled={cell.status !== 'normal' ? true : false }>
         { glyph }
       </button>
     );
