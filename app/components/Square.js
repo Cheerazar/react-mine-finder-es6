@@ -28,7 +28,7 @@ export class Square extends React.Component {
     if (cell.status !== 'normal' && cell.status !== 'revealed') {
       glyph = <Glyphicon glyph={cell.status} />;
     } else {
-      glyph = cell.status === 'revealed' ? 1 : undefined;
+      glyph = cell.status === 'revealed' && cell.isMine ? 'X' : undefined;
     }
 
     return (
