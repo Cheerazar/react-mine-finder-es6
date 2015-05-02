@@ -27,8 +27,13 @@ export class Square extends React.Component {
 
     if (cell.status !== 'normal' && cell.status !== 'revealed') {
       glyph = <Glyphicon glyph={cell.status} />;
+    } else if (cell.status === 'revealed' && cell.isMine) {
+      glyph = 'X';
+    } else if (cell.status === 'revealed' && cell.numRevealed > 0) {
+      glyph = cell.numRevealed;
     } else {
-      glyph = cell.status === 'revealed' && cell.isMine ? 'X' : undefined;
+      // will probably need to update the styles to make the button unclickable
+      glyph = undefined;
     }
 
     return (

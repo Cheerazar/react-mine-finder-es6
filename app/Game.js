@@ -150,6 +150,7 @@ class Game extends React.Component {
     this.state = {
       board: makeBoard(),
       isStarted: false,
+      gameWon: false,
       gameLost: false,
       mineCount: 10
     };
@@ -184,14 +185,16 @@ class Game extends React.Component {
   // deal with left clicking on a square to reveal it
   revealSquare (cellInfo) {
     let newBoard = deepcopy(this.state.board);
-    // if it's a mine set gameLost to true
-    // else if it's not a mine (checked in previous condition) and numRevealed > 0 reveal just that square
+    let newCell = deepcopy(cellInfo);
+    // if it's a mine or numRevealed > 0 reveal that square
     // else reveal all squares until hitting numRevealed's all around
-    if (cellInfo.isMine) {
-      this.setState({
-        gameLost: true
-      });
+    if (newCell.isMine || newCell.numRevealed > 0) {
+      newCell.status = 'revealed';
+      newBoard[newCell.row][newCell.cell] = newCell;
     }
+
+    // always update the board, and then if the game is lost update the gameLost property, otherwise just pass add an empty object which won't change anything
+    this.setState(assign({ board: newBoard }, (newCell.isMine ? { gameLost: true } : {})));
   }
 
   render () {
