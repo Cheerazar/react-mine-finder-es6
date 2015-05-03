@@ -144,6 +144,44 @@ function makeBoard(rows = 8, cells = 8, mines = 10) {
   return revealedNums(board);
 }
 
+function floodReveal (board, row, cell) {
+  let cellsMax = board[row].length;
+  let rowsMax = board.length;
+
+  var recurse = function (row, cell) {
+    let currentCell;
+
+    // verify that the cell that is being accessed is on the board
+    if (row >= 0 && row < rowsMax && cell >= 0 && cell < cellsMax) {
+      currentCell = board[row][cell];
+    }
+
+    // if the currentCell is already revealed, exit this recursive path
+    // else if this cell is normal and not a mine set the status to revealed
+    if (currentCell && currentCell.status === 'revealed') {
+      return;
+    } else if (currentCell && currentCell.status === 'normal' && !currentCell.isMine) {
+      currentCell.status = 'revealed';
+
+      // recurse over each direction north, east, south, and west
+      if (currentCell.numRevealed === 0) {
+        // south
+        recurse(row + 1, cell);
+        // east
+        recurse(row, cell + 1);
+        // north
+        recurse(row - 1, cell);
+        // west
+        recurse(row, cell - 1);
+      }
+    }
+  };
+
+  recurse(row, cell);
+
+  return board;
+}
+
 class Game extends React.Component {
   constructor (props) {
     super(props);
@@ -191,6 +229,8 @@ class Game extends React.Component {
     if (newCell.isMine || newCell.numRevealed > 0) {
       newCell.status = 'revealed';
       newBoard[newCell.row][newCell.cell] = newCell;
+    } else {
+      newBoard = floodReveal(newBoard, newCell.row, newCell.cell);
     }
 
     // always update the board, and then if the game is lost update the gameLost property, otherwise just pass add an empty object which won't change anything

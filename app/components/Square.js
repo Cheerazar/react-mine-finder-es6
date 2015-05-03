@@ -31,6 +31,8 @@ export class Square extends React.Component {
       glyph = 'X';
     } else if (cell.status === 'revealed' && cell.numRevealed > 0) {
       glyph = cell.numRevealed;
+    } else if (cell.status === 'revealed' && cell.numRevealed === 0) {
+      glyph = 'O';
     } else {
       // will probably need to update the styles to make the button unclickable
       glyph = undefined;
