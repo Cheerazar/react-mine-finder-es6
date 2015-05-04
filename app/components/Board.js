@@ -25,7 +25,8 @@ export class Board extends React.Component {
       <div style={style}>
         <GameState
           mineCount={this.props.mineCount}
-          gameLost={this.props.gameLost} />
+          gameLost={this.props.gameLost}
+          gameWon={this.props.gameWon} />
         { rows }
       </div>
     );
@@ -37,5 +38,6 @@ Board.propTypes = {
   markSquare: React.PropTypes.func.isRequired,
   revealSquare: React.PropTypes.func.isRequired,
   mineCount: React.PropTypes.number.isRequired,
-  gameLost: React.PropTypes.bool.isRequired
+  gameLost: React.PropTypes.bool.isRequired,
+  gameWon: React.PropTypes.bool.isRequired
 };

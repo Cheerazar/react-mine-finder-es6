@@ -8,14 +8,24 @@ let style = {
 
 export class Reset extends React.Component {
   render () {
+    let gameStatus;
+
+    if (this.props.gameLost) {
+      gameStatus = 'Boo lost the game!';
+    } else if (this.props.gameWon) {
+      gameStatus = 'Yay won the game!';
+    } else {
+      gameStatus = 'Reset!'
+    }
     return (
       <div style={style}>
-        { this.props.gameLost ? 'Boo lost the game!' : 'Hello from Reset!' }
+        { gameStatus }
       </div>
     );
   }
 }
 
 Reset.propTypes = {
-  gameLost: React.PropTypes.bool.isRequired
+  gameLost: React.PropTypes.bool.isRequired,
+  gameWon: React.PropTypes.bool.isRequired
 };

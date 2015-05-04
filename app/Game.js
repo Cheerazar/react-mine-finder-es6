@@ -27,7 +27,7 @@ function insertMines (board, numOfMines) {
   // Keep making boards with random placements until all are placed
   while (!allPlaced) {
     minedBoard = deepcopy(board);
-    minesPlaced = 1;
+    minesPlaced = 0;
     for (position = 0; position < numOfCells; position++) {
       // find random number between (numOfCells - position) + position
       randomPosition = findRandom(position, numOfCells);
@@ -194,6 +194,32 @@ class Game extends React.Component {
     };
   }
 
+  isGameWon () {
+    if (!this.state.gameLost) {
+      // need to go over every cell, so flatten the board
+      // if that cell is a mine and revealed return false
+      // if that cell is not a mine and is not revealed return false
+      // else return true
+      let isGameWon = this.state.board.reduce((a, b) => {
+        return a.concat(b);
+      }).every(cell => {
+        if (cell.isMine && cell.status === 'revealed') {
+          return false;
+        } else if (!cell.isMine && cell.status !== 'revealed') {
+          return false;
+        } else {
+          return true;
+        }
+      });
+
+      if (isGameWon) {
+        this.setState({
+          gameWon: isGameWon
+        });
+      }
+    }
+  }
+
   // deal with right clicking on a square to mark with ?, flag, and back to normal
   markSquare (cellInfo) {
     // as I'm passing a reference around to the object within board, should I make
@@ -234,7 +260,8 @@ class Game extends React.Component {
     }
 
     // always update the board, and then if the game is lost update the gameLost property, otherwise just pass add an empty object which won't change anything
-    this.setState(assign({ board: newBoard }, (newCell.isMine ? { gameLost: true } : {})));
+    this.setState(assign({ board: newBoard }, (newCell.isMine ? { gameLost: true } : {})),
+      this.isGameWon);
   }
 
   render () {
@@ -245,7 +272,8 @@ class Game extends React.Component {
           markSquare={this.markSquare.bind(this)}
           revealSquare={this.revealSquare.bind(this)}
           mineCount={this.state.mineCount}
-          gameLost={this.state.gameLost} />
+          gameLost={this.state.gameLost}
+          gameWon={this.state.gameWon} />
       </div>
     );
   }
