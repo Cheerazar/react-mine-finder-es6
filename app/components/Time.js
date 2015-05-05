@@ -10,8 +10,12 @@ export class Time extends React.Component {
   render () {
     return (
       <div style={style}>
-        Hello from Time!
+        { this.props.time }
       </div>
     );
   }
 }
+
+Time.propTypes = {
+  time: React.PropTypes.number.isRequired
+};

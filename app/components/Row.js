@@ -16,7 +16,9 @@ export class Row extends React.Component {
           index={index}
           markSquare={this.props.markSquare}
           revealSquare={this.props.revealSquare}
-          gameLost={this.props.gameLost} />
+          gameLost={this.props.gameLost}
+          isStarted={this.props.isStarted}
+          startTimer={this.props.startTimer} />
       );
     });
 
@@ -32,5 +34,7 @@ Row.propTypes = {
   cells: React.PropTypes.array.isRequired,
   markSquare: React.PropTypes.func.isRequired,
   revealSquare: React.PropTypes.func.isRequired,
-  gameLost: React.PropTypes.bool.isRequired
+  gameLost: React.PropTypes.bool.isRequired,
+  isStarted: React.PropTypes.bool.isRequired,
+  startTimer: React.PropTypes.func.isRequired
 };

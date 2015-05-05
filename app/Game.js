@@ -190,17 +190,33 @@ class Game extends React.Component {
       isStarted: false,
       gameWon: false,
       gameLost: false,
-      mineCount: 10
+      mineCount: 10,
+      time: 0,
+      timerInfo: null
     };
   }
 
+  checkGameState () {
+    if (this.state.gameLost) {
+      this.stopTimer();
+    } else {
+      let isGameWon = this.isGameWon();
+
+      if (isGameWon) {
+        this.stopTimer();
+        this.setState({
+          gameWon: isGameWon
+        });
+      }
+    }
+  }
+
   isGameWon () {
-    if (!this.state.gameLost) {
       // need to go over every cell, so flatten the board
       // if that cell is a mine and revealed return false
       // if that cell is not a mine and is not revealed return false
       // else return true
-      let isGameWon = this.state.board.reduce((a, b) => {
+      return this.state.board.reduce((a, b) => {
         return a.concat(b);
       }).every(cell => {
         if (cell.isMine && cell.status === 'revealed') {
@@ -211,13 +227,6 @@ class Game extends React.Component {
           return true;
         }
       });
-
-      if (isGameWon) {
-        this.setState({
-          gameWon: isGameWon
-        });
-      }
-    }
   }
 
   // deal with right clicking on a square to mark with ?, flag, and back to normal
@@ -261,7 +270,23 @@ class Game extends React.Component {
 
     // always update the board, and then if the game is lost update the gameLost property, otherwise just pass add an empty object which won't change anything
     this.setState(assign({ board: newBoard }, (newCell.isMine ? { gameLost: true } : {})),
-      this.isGameWon);
+      this.checkGameState);
+  }
+
+  startTimer () {
+    if (this.state.timerInfo === null) {
+      let timerInfo = setInterval(() => {
+        this.setState({
+          time: this.state.time + 1
+        });
+      }, 1000);
+
+      this.setState({ timerInfo, isStarted: true });
+    }
+  }
+
+  stopTimer () {
+    clearInterval(this.state.timerInfo);
   }
 
   render () {
@@ -273,7 +298,10 @@ class Game extends React.Component {
           revealSquare={this.revealSquare.bind(this)}
           mineCount={this.state.mineCount}
           gameLost={this.state.gameLost}
-          gameWon={this.state.gameWon} />
+          gameWon={this.state.gameWon}
+          time={this.state.time}
+          isStarted={this.state.isStarted}
+          startTimer={this.startTimer.bind(this)} />
       </div>
     );
   }

@@ -14,6 +14,12 @@ export class Square extends React.Component {
   handleClick (e) {
     e.preventDefault();
     let cell = this.props.cell;
+
+    // start game timer
+    if (!this.props.isStarted) {
+      this.props.startTimer();
+    }
+
     if (cell.status === 'normal' && e.type === 'click') {
       this.props.revealSquare(cell);
     } else if (cell.status !== 'revealed' && e.type === 'contextmenu') {
@@ -55,5 +61,7 @@ Square.propTypes = {
   cell: React.PropTypes.object.isRequired,
   markSquare: React.PropTypes.func.isRequired,
   revealSquare: React.PropTypes.func.isRequired,
-  gameLost: React.PropTypes.bool.isRequired
+  gameLost: React.PropTypes.bool.isRequired,
+  isStarted: React.PropTypes.bool.isRequired,
+  startTimer: React.PropTypes.func.isRequired
 };

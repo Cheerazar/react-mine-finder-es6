@@ -17,7 +17,9 @@ export class Board extends React.Component {
           key={index}
           markSquare={this.props.markSquare}
           revealSquare={this.props.revealSquare}
-          gameLost={this.props.gameLost} />
+          gameLost={this.props.gameLost}
+          isStarted={this.props.isStarted}
+          startTimer={this.props.startTimer} />
       );
     });
 
@@ -26,7 +28,8 @@ export class Board extends React.Component {
         <GameState
           mineCount={this.props.mineCount}
           gameLost={this.props.gameLost}
-          gameWon={this.props.gameWon} />
+          gameWon={this.props.gameWon}
+          time={this.props.time} />
         { rows }
       </div>
     );
@@ -39,5 +42,8 @@ Board.propTypes = {
   revealSquare: React.PropTypes.func.isRequired,
   mineCount: React.PropTypes.number.isRequired,
   gameLost: React.PropTypes.bool.isRequired,
-  gameWon: React.PropTypes.bool.isRequired
+  gameWon: React.PropTypes.bool.isRequired,
+  isStarted: React.PropTypes.bool.isRequired,
+  time: React.PropTypes.number.isRequired,
+  startTimer: React.PropTypes.func.isRequired
 };
