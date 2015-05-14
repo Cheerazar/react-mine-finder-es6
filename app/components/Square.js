@@ -1,10 +1,10 @@
 import React from 'react';
 import { Glyphicon } from 'react-bootstrap';
+import assign from 'object-assign';
 
 let styles = {
   display: 'flex',
   outline: '1px solid #ddd',
-  background: '#f0f0f0',
   flexGrow: 1,
   height: '30px',
   width: '30px'
@@ -37,8 +37,6 @@ export class Square extends React.Component {
       glyph = 'X';
     } else if (cell.status === 'revealed' && cell.numRevealed > 0) {
       glyph = cell.numRevealed;
-    } else if (cell.status === 'revealed' && cell.numRevealed === 0) {
-      glyph = 'O';
     } else {
       // will probably need to update the styles to make the button unclickable
       glyph = undefined;
@@ -49,7 +47,7 @@ export class Square extends React.Component {
         onContextMenu={this.handleClick.bind(this)}
         onClick={this.handleClick.bind(this)}
         type="button"
-        style={styles}
+        style={assign({}, styles, cell.status === 'revealed' ? {} : {background: '#f0f0f0'})}
         disabled={cell.status !== 'normal' || this.props.gameLost ? true : false }>
         { glyph }
       </button>
